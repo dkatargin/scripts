@@ -2,6 +2,7 @@
 
 import hashlib
 import os
+import mimetypes
 import sys
 
 
@@ -46,12 +47,16 @@ def xml_output():
     print('<?xml version="1.0" encoding="UTF-8"?>')
     print("<root>")
     for dkey in duped:
-        f_name = "_".join(dkey.split("_")[:-1])
-        f_size = dkey.split("_")[-1]
-        print(f'\t<files data_key="{f_name}" size={f_size}>')
+        data_key = "_".join(dkey.split("_")[:-1])
+        file_size = dkey.split("_")[-1]
+        file_name = files_dict.get(dkey, [])[0]
+        file_mime_type = mimetypes.guess_type(file_name)[0]
+        print(
+            f'\t<file data-key="{data_key}" mime-type="{file_mime_type}" size="{file_size}">'
+        )
         for fpath in files_dict.get(dkey, []):
-            print(f'\t\t<file path="{fpath}"/>')
-        print(f"\t</files>")
+            print(f'\t\t<dup path="{fpath}"/>')
+        print(f"\t</file>")
     print("</root>")
 
 
