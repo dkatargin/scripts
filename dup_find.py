@@ -46,7 +46,7 @@ def xml_output():
     # generate xml struct
     print('<?xml version="1.0" encoding="UTF-8"?>')
     print("<root>")
-    for dkey in duped:
+    for dkey in set(duped):
         data_key = "_".join(dkey.split("_")[:-1])
         file_size = dkey.split("_")[-1]
         file_name = files_dict.get(dkey, [])[0]
